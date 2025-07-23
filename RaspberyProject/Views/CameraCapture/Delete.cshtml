@@ -1,0 +1,35 @@
+﻿@model BLL.DTOs.CameraCaptureDtos.CameraCaptureDetailDto
+
+@{
+    ViewData["Title"] = "Kayıt Sil";
+}
+
+<div class="container mt-5">
+    <h2 class="text-danger fw-bold mb-4">🗑️ Kamera Kaydını Sil</h2>
+
+    <div class="alert alert-warning">
+        <strong>Dikkat!</strong> Aşağıdaki kayıt kalıcı olarak silinecektir. Bu işlem geri alınamaz.
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="row g-0">
+            <div class="col-md-5">
+                <img src="@Model.Base64ImageData" class="img-fluid rounded-start" alt="Kamera Görseli" style="object-fit: cover; height: 100%; width: 100%;" />
+            </div>
+            <div class="col-md-7">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.FileName</h5>
+                    <p class="card-text">@Model.Description</p>
+                    <p class="card-text"><small class="text-muted">📅 @Model.CapturedAt.ToString("dd.MM.yyyy HH:mm")</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger me-2">Evet, Sil</button>
+        <a asp-action="Index" class="btn btn-secondary">İptal</a>
+    </form>
+</div>
+

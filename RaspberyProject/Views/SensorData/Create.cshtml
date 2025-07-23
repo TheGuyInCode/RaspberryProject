@@ -1,0 +1,51 @@
+﻿@using BLL.DTOs.SensorDataDtos
+@model SensorDataAddDto
+
+@{
+    ViewData["Title"] = "Yeni Sensör Verisi";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">➕ Yeni Sensör Verisi Ekle</h2>
+
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="Temperature" class="form-label">🌡️ Sıcaklık (°C)</label>
+            <input asp-for="Temperature" class="form-control" placeholder="örn: 24.5" />
+            <span asp-validation-for="Temperature" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Humidity" class="form-label">💧 Nem (%)</label>
+            <input asp-for="Humidity" class="form-control" placeholder="örn: 45.0" />
+            <span asp-validation-for="Humidity" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="DeviceName" class="form-label">🖥️ Cihaz Adı</label>
+            <input asp-for="DeviceName" class="form-control" placeholder="örn: Rasp-01" />
+            <span asp-validation-for="DeviceName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="SensorType" class="form-label">🔧 Sensör Tipi</label>
+            <input asp-for="SensorType" class="form-control" placeholder="örn: DHT22" />
+            <span asp-validation-for="SensorType" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="CapturedAt" class="form-label">📅 Ölçüm Tarihi</label>
+            <input asp-for="CapturedAt" class="form-control" type="datetime-local" />
+            <span asp-validation-for="CapturedAt" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a asp-action="Index" class="btn btn-outline-secondary">İptal</a>
+            <button type="submit" class="btn btn-primary">📥 Kaydet</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

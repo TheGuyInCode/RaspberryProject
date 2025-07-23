@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1 class="mb-4 fw-bold">🔧 Raspberry Gösterge Paneli</h1>
+<p class="text-muted">Cihazdan gelen verileri buradan yönetebilir, özetleri görüntüleyebilirsiniz.</p>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card border-primary shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">QR Kod Kayıtları</h5>
+                <p class="card-text">Toplam: <strong>@ViewBag.TotalQr</strong></p>
+                <a href="/QrRecord" class="btn btn-outline-primary btn-sm">Görüntüle</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-success shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Kamera Görselleri</h5>
+                <p class="card-text">Toplam: <strong>@ViewBag.TotalCamera</strong></p>
+                <a href="/CameraCapture" class="btn btn-outline-success btn-sm">Görüntüle</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-warning shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Sensör Verileri</h5>
+                <p class="card-text">Toplam: <strong>@ViewBag.TotalSensor</strong></p>
+                <a href="/SensorData" class="btn btn-outline-warning btn-sm">Görüntüle</a>
+            </div>
+        </div>
+    </div>
+</div>

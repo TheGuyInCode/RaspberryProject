@@ -1,0 +1,36 @@
+﻿@using BLL.DTOs.SensorDataDtos
+@model SensorDataDetailDto
+
+@{
+    ViewData["Title"] = "Sensör Detayı";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">🔍 Sensör Kaydı Detayları</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">🌡️ Sıcaklık (°C)</dt>
+                <dd class="col-sm-9">@Model.Temperature</dd>
+
+                <dt class="col-sm-3">💧 Nem (%)</dt>
+                <dd class="col-sm-9">@Model.Humidity</dd>
+
+                <dt class="col-sm-3">🔧 Sensör Tipi</dt>
+                <dd class="col-sm-9">@Model.SensorType</dd>
+
+                <dt class="col-sm-3">🖥️ Cihaz Adı</dt>
+                <dd class="col-sm-9">@Model.DeviceName</dd>
+
+                <dt class="col-sm-3">📅 Kayıt Tarihi</dt>
+                <dd class="col-sm-9">@Model.CreatedDate.ToString("dd.MM.yyyy HH:mm")</dd>
+            </dl>
+
+            <div class="mt-4 d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-secondary">← Geri</a>
+                <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">🗑️ Sil</a>
+            </div>
+        </div>
+    </div>
+</div>

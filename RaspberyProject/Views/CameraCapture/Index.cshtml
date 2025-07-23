@@ -1,0 +1,82 @@
+﻿@using BLL.DTOs.CameraCaptureDtos
+@model List<CameraCaptureListDto>
+
+@{
+    ViewData["Title"] = "Kamera Kayıtları";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">📸 Kamera Kayıtları</h2>
+        <a asp-action="Create" class="btn btn-success">+ Yeni Görsel</a>
+    </div>
+
+    <div class="row g-3 mb-4 align-items-center">
+        <div class="col-md-6">
+            <form asp-action="SearchCamCaptures" method="get" class="input-group">
+                <input type="text" name="keyword" class="form-control" placeholder="Açıklama ya da dosya adıyla ara..." />
+                <button type="submit" class="btn btn-primary">🔍 Ara</button>
+            </form>
+        </div>
+
+        <div class="col-md-6">
+            <form asp-action="GetCameraCapturesByDate" method="get" class="row g-2">
+                <div class="col">
+                    <input type="date" name="start" class="form-control" required />
+                </div>
+                <div class="col">
+                    <input type="date" name="end" class="form-control" required />
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-outline-secondary w-100">📅 Tarihe Göre Filtrele</button>
+                </div>
+            </form>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <div class="alert alert-danger mt-2">@error.ErrorMessage</div>
+            }
+        </div>
+    </div>
+
+    @if (ViewBag.TotalCount != null)
+    {
+        <div class="alert alert-info text-end">
+            Toplam kayıt: <strong>@ViewBag.TotalCount</strong>
+        </div>
+    }
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-warning">@ViewBag.Message</div>
+    }
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="@item.Base64ImageData"
+                             class="card-img-top"
+                             alt="Kamera Görseli"
+                             style="object-fit: cover; height: 250px;" />
+                        <div class="card-body">
+                            <h5 class="card-title">@item.FileName</h5>
+                            <p class="card-text">@item.Description</p>
+                            <p class="text-muted small">@item.CapturedAt.ToString("dd.MM.yyyy HH:mm")</p>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info me-1">Detay</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Sil</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">Henüz hiç kamera kaydı yok.</div>
+    }
+
+</div>

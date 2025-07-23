@@ -1,0 +1,39 @@
+﻿@using BLL.DTOs.SensorDataDtos
+@model SensorDataDetailDto
+
+@{
+    ViewData["Title"] = "Sensör Verisini Sil";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold text-danger mb-4">⚠️ Silme Onayı</h2>
+
+    <div class="alert alert-warning">
+        <strong>UYARI:</strong> Bu sensör verisi kalıcı olarak silinecek. Emin misiniz?
+    </div>
+
+    <dl class="row">
+        <dt class="col-sm-3">📅 Ölçüm Tarihi</dt>
+        <dd class="col-sm-9">@Model.CapturedAt?.ToString("dd.MM.yyyy HH:mm")</dd>
+
+        <dt class="col-sm-3">🌡️ Sıcaklık (°C)</dt>
+        <dd class="col-sm-9">@Model.Temperature</dd>
+
+        <dt class="col-sm-3">💧 Nem (%)</dt>
+        <dd class="col-sm-9">@Model.Humidity</dd>
+
+        <dt class="col-sm-3">🖥️ Cihaz Adı</dt>
+        <dd class="col-sm-9">@Model.DeviceName</dd>
+
+        <dt class="col-sm-3">🔧 Sensör Tipi</dt>
+        <dd class="col-sm-9">@Model.SensorType</dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div class="d-flex justify-content-between">
+            <a asp-action="Index" class="btn btn-secondary">İptal</a>
+            <button type="submit" class="btn btn-danger">🗑️ Sil</button>
+        </div>
+    </form>
+</div>

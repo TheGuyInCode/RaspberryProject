@@ -1,0 +1,35 @@
+﻿@model BLL.DTOs.CameraCaptureDtos.CameraCaptureDetailDto
+
+@{
+    ViewData["Title"] = "Görsel Detayları";
+}
+
+<div class="container mt-4">
+    <h2 class="fw-bold mb-4">🖼️ Kamera Görsel Detayları</h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <img src="@Model.Base64ImageData"
+                 alt="Kayıtlı Görsel"
+                 class="img-fluid rounded shadow-sm border"
+                 style="max-height: 400px; object-fit: cover;" />
+        </div>
+        <div class="col-md-6">
+            <dl class="row">
+                <dt class="col-sm-4">Dosya Adı</dt>
+                <dd class="col-sm-8">@Model.FileName</dd>
+
+                <dt class="col-sm-4">Açıklama</dt>
+                <dd class="col-sm-8">@Model.Description</dd>
+
+                <dt class="col-sm-4">Tarih</dt>
+                <dd class="col-sm-8">@Model.CapturedAt.ToString("dd.MM.yyyy HH:mm")</dd>
+            </dl>
+
+            <div class="mt-4">
+                <a asp-action="Index" class="btn btn-outline-secondary me-2">🔙 Geri Dön</a>
+                <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">🗑️ Sil</a>
+            </div>
+        </div>
+    </div>
+</div>

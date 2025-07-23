@@ -1,0 +1,105 @@
+﻿@using BLL.DTOs.QrRecordDtos
+@model List<QrRecordListDto>
+
+@{
+    ViewData["Title"] = "QR Kayıtları";
+}
+
+<div class="container mt-4">
+
+    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">📄 QR Kayıtları</h2>
+        <a asp-action="Create" class="btn btn-success">+ Yeni QR Kaydı</a>
+    </div>
+    
+    <div class="row g-3 mb-4">
+        <div class="col-md-6">
+            <form asp-action="Search" method="post" class="input-group">
+                <input type="text" name="keyword" class="form-control" placeholder="Anahtar kelime ile ara..." />
+                <button type="submit" class="btn btn-primary">🔍 Ara</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form asp-action="GetQrRecordsByDateRange" method="post" class="row g-2">
+                <div class="col">
+                    <input type="date" name="start" class="form-control" required />
+                </div>
+
+                <div class="col">
+                    <input type="date" name="end" class="form-control" required />
+                </div>
+
+                <div class="col">
+                    <button type="submit" class="btn btn-outline-secondary w-100">📅 Tarih Aralığı</button>
+                </div>
+            </form>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <div class="alert alert-danger">
+                    @error.ErrorMessage
+                </div>
+            }
+        </div>
+    </div>
+
+    
+    @if (ViewBag.TotalCount != null)
+    {
+        <div class="alert alert-success text-end">
+            Toplam kayıt sayısı: <strong>@ViewBag.TotalCount</strong>
+        </div>
+    }
+
+    
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-info">
+            @ViewBag.Message
+        </div>
+    }
+
+    
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle shadow-sm">
+                <thead class="table-dark">
+                    <tr>
+                        <th>İçerik</th>
+                        <th>Cihaz Adı</th>
+                        <th>Taranma Tarihi</th>
+                        <th>QR Görsel</th>
+                        <th style="width: 180px;">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Content</td>
+                            <td>@item.DeviceName</td>
+                            <td>@item.ScannedAt.ToString("dd.MM.yyyy HH:mm")</td>
+                            <td>
+                                <img src="@Url.Action("QrImage", "QrRecord", new { id = item.Id })"
+                                     alt="QR" style="height: 64px;" class="img-thumbnail" />
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info me-1">Detay</a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary me-1">Düzenle</a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Sil</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            Henüz hiç QR kaydı eklenmemiş.
+        </div>
+    }
+
+</div>

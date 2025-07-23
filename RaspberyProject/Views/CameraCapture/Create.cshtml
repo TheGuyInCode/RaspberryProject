@@ -1,0 +1,61 @@
+﻿@model BLL.DTOs.CameraCaptureDtos.CameraCaptureAddDto
+
+@{
+    ViewData["Title"] = "Yeni Kamera Görseli Ekle";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4 fw-bold">📷 Yeni Kamera Görseli Ekle</h2>
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label class="form-label">Görsel Yükle</label>
+            <input type="file" id="imageInput" class="form-control" />
+            <input type="hidden" name="Base64ImageData" id="Base64ImageData" />
+            <span asp-validation-for="Base64ImageData" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="FileName" class="form-label">Dosya Adı</label>
+            <input asp-for="FileName" class="form-control" id="FileName" placeholder="örn: image01.png" />
+            <span asp-validation-for="FileName" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Açıklama</label>
+            <input asp-for="Description" class="form-control" placeholder="Görselle ilgili kısa bir açıklama..." />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a asp-action="Index" class="btn btn-outline-secondary">İptal</a>
+            <button type="submit" class="btn btn-primary">📥 Kaydet</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+
+    <script>
+        document.getElementById("imageInput").addEventListener("change", function () {
+            const file = this.files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = function () {
+                const base64 = reader.result.split(',')[1];
+                document.getElementById("Base64ImageData").value = base64;
+
+                // 🆕 Dosya adını otomatik olarak doldur
+                document.getElementById("FileName").value = file.name;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        });
+
+    </script>
+
+    <partial name="_ValidationScriptsPartial" />
+}
+
